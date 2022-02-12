@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<canvas id= "canvas">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvas");
+var context = canvas.getContext("2d");
+
+var player = {};
+var keymap = [];
+
+player.color0 = "#00ffff";
+player.color1 = "#ffff00";
+player.color2 = "#ff0000";
+player.color3 = "#00ffff";
+player.color4 = "#33cc33";
+player.x = 0;
+player.y = 0;
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+document.onkeydown = function(event) {
+	keymap[event.keyCode] = true;
+};
+document.onkeyup = function(event) {
+	keymap[event.keyCode] = false;
+};
+
+var colorIter = 0;
+
+function gameLoop() {
+	input();
+	
+	
+	//colorIter++;
+	colorIter = colorIter % 5;
+
+	context.fillStyle = "#ffffff";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+
+	context.fillStyle = "#ffcc00";
+	context.fillRect(player.x, player.y, 15, 15);
+	context.fillStyle = player["color" + colorIter];
+	context.fillRect(player.x + 15, player.y + 15, 30, 30);
+	context.fillStyle = "#ffcc00";
+	context.fillRect(player.x + 45, player.y + 0, 15, 15);
+	context.fillStyle = "#ffcc00";
+	context.fillRect(player.x + 0, player.y + 45, 15, 15);
+	context.fillStyle = "#ffcc00";
+	context.fillRect(player.x + 45, player.y + 45, 15, 15);
+	context.fillStyle = "#000000";
+	context.fillRect(player.x + 15, player.y + 0, 30, 15);
+	context.fillStyle = "#000000";
+	context.fillRect(player.x + 0, player.y + 15, 15, 30);
+	context.fillStyle = "#000000";
+	context.fillRect(player.x + 45, player.y + 15, 15, 30);
+	context.fillStyle = "#000000";
+	context.fillRect(player.x + 15, player.y + 45, 30, 15);
+	
+	window.requestAnimationFrame(gameLoop);
+};
+
+function input() {
+
+	if(keymap[87]) {
+		player.y = player.y - 5;
+	} else if(keymap[83]) {
+		player.y = player.y + 5;
+	}
+	if(keymap[65]) {
+		player.x = player.x - 5;
+	} else if(keymap[68]) {
+		player.x = player.x + 5;
+	} 
+};
+
+gameLoop();
+
+
+</script>
+
+
+</html>
